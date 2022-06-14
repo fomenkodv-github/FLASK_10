@@ -10,7 +10,7 @@ def json_read(file="candidates.json") -> list[dict]:
 
 
 @app.route('/')
-def load_candidates():  # put application's code here
+def load_candidates():
     candidates: list[dict] = json_read()
     result = '<pre>'
     for candidate in candidates:
@@ -20,18 +20,17 @@ def load_candidates():  # put application's code here
           Навыки через запятую: {candidate['skills']}\n
         """
     result += '</pre>'
-    #print(result)
     return result
 
-@app.route('/candidates/<int:x>')
-def load_candidate(x: int):
+@app.route('/candidates/<int:uid>')
+def load_candidate(uid: int):
     candidates: list[dict] = json_read()
     result = '\n<pre>'
     for candidate in candidates:
-        if x > len(candidates):
+        if uid > len(candidates):
             result += f'No such candidate #{x}, candidate number is only valid within 1 and {len(candidates)} </pre>'
             break
-        if candidate.get('id') == x:
+        if candidate.get('id') == uid:
             result += f"""
              Имя кандидата - {candidate['name']}\n
              Позиция кандидата - {candidate['position']}\n
